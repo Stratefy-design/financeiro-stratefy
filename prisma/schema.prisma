@@ -31,6 +31,7 @@ model Profile {
   goals              Goal[]
   services           Service[]
   transactions       Transaction[]
+  quotes             Quote[]
 }
 
 model Client {
@@ -43,6 +44,7 @@ model Client {
   appointments Appointment[]
   profile      Profile       @relation(fields: [profileId], references: [id], onDelete: Cascade)
   transactions Transaction[]
+  quotes       Quote[]
 }
 
 model Service {
@@ -53,6 +55,7 @@ model Service {
   createdAt    DateTime      @default(now())
   profile      Profile       @relation(fields: [profileId], references: [id], onDelete: Cascade)
   transactions Transaction[]
+  quotes       Quote[]
 }
 
 model Transaction {
@@ -74,6 +77,24 @@ model Transaction {
   service          Service?  @relation(fields: [serviceId], references: [id])
   client           Client?   @relation(fields: [clientId], references: [id])
   profile          Profile   @relation(fields: [profileId], references: [id], onDelete: Cascade)
+}
+
+model Quote {
+  id          Int       @id @default(autoincrement())
+  profileId   Int
+  description String
+  amount      Float
+  quantity    Int       @default(1)
+  date        DateTime
+  status      String    @default("pending")
+  expiresAt   DateTime?
+  clientId    Int?
+  serviceId   Int?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  service     Service?  @relation(fields: [serviceId], references: [id])
+  client      Client?   @relation(fields: [clientId], references: [id])
+  profile     Profile   @relation(fields: [profileId], references: [id], onDelete: Cascade)
 }
 
 model Goal {

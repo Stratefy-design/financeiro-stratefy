@@ -24,7 +24,8 @@ import {
     Tag,
     Sun,
     Moon,
-    CreditCard
+    CreditCard,
+    FileText
 } from 'lucide-react';
 import { useClerk } from '@clerk/nextjs';
 import { Logo } from '@/components/ui/Logo';
@@ -68,6 +69,7 @@ export function Sidebar({ currentProfileId, profiles }: SidebarProps) {
                 { name: 'Serviços', icon: Briefcase, href: '/services' },
                 { name: 'Despesas', icon: Tag, href: '/expense-categories' },
                 { name: 'Relatórios', icon: BarChart3, href: '/reports' },
+                { name: 'Orçamentos', icon: FileText, href: '/quotes' },
                 { name: 'Emitir Nota Fiscal', icon: ExternalLink, href: '/invoices' },
             ]
         }

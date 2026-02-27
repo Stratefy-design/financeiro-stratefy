@@ -34,17 +34,22 @@ export async function getCurrentProfileId() {
 
     // 2. New User Setup - Check for Legacy Data Claim
     const user = await currentUser();
-    const userEmail = user?.emailAddresses[0]?.emailAddress;
+    const userIdInClerk = userId; // from auth()
 
-    if (userEmail === 'stratefydesign@gmail.com') {
-        // LEGACY CLAIM: Link all orphan profiles (userId: null) to this user
-        // We assume existing profiles (IDs 1, 2 etc) are the legacy ones.
+    // LEGACY CLAIM: Link all orphan profiles (userId: null) to this user
+    // We do this for the first user that logs in after migration.
+    const orphanProfiles = await prisma.profile.findMany({
+        where: { userId: null }
+    });
+
+    if (orphanProfiles.length > 0) {
         await prisma.profile.updateMany({
             where: { userId: null },
-            data: { userId: userId }
+            data: { userId: userIdInClerk }
         });
 
-        return 2; // Default to Stratefy (Business) for the owner
+        // Return the first profile found
+        return orphanProfiles[0].id;
     }
 
     // 3. Brand New User - Create Fresh Profile
@@ -68,7 +73,11 @@ export async function switchProfile(profileId: number) {
 }
 
 export async function getProfiles() {
-    return await prisma.profile.findMany();
+    const { userId } = await auth();
+    if (!userId) return [];
+    return await prisma.profile.findMany({
+        where: { userId }
+    });
 }
 
 export async function getCurrentProfile() {

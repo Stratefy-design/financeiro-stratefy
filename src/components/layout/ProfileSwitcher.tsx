@@ -47,7 +47,8 @@ export function ProfileSwitcher({ currentProfileId, profiles }: { currentProfile
     }
 
     // Helper to determine avatar source
-    const getAvatarSrc = (profile: Profile) => {
+    const getAvatarSrc = (profile?: Profile) => {
+        if (!profile) return null;
         // 1. Custom Company Logo (Highest Priority)
         if (profile.companyAvatar) return profile.companyAvatar;
 
@@ -71,16 +72,16 @@ export function ProfileSwitcher({ currentProfileId, profiles }: { currentProfile
                     {activeAvatarSrc ? (
                         <img
                             src={activeAvatarSrc}
-                            alt={activeProfile.name}
+                            alt={activeProfile?.name || 'Perfil'}
                             className="w-full h-full object-cover"
                         />
                     ) : (
-                        activeProfile?.name.substring(0, 2) || 'FI'
+                        (activeProfile?.name || 'FI').substring(0, 2)
                     )}
                 </div>
                 <div className="hidden md:block flex-1 min-w-0 text-left">
-                    <h3 className="text-sm font-semibold text-gray-900 dark:text-white truncate">{activeProfile?.name}</h3>
-                    <p className="text-xs text-gray-500 dark:text-zinc-400 capitalize">{activeProfile?.type === 'personal' ? 'Pessoal' : 'Empresa'}</p>
+                    <h3 className="text-sm font-semibold text-gray-900 dark:text-white truncate">{activeProfile?.name || 'Carregando...'}</h3>
+                    <p className="text-xs text-gray-500 dark:text-zinc-400 capitalize">{activeProfile?.type === 'business' ? 'Empresa' : 'Pessoal'}</p>
                 </div>
                 <ChevronDown size={14} className={`text-gray-400 dark:text-zinc-500 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
             </div>
@@ -106,7 +107,7 @@ export function ProfileSwitcher({ currentProfileId, profiles }: { currentProfile
                                         {avatarSrc ? (
                                             <img src={avatarSrc} alt={profile.name} className="w-full h-full object-cover" />
                                         ) : (
-                                            profile.name.substring(0, 2).toUpperCase()
+                                            (profile.name || 'P').substring(0, 2).toUpperCase()
                                         )}
                                     </div>
                                     <span className={`font-medium flex-1 truncate ${profile.id === currentProfileId ? 'text-gray-900 dark:text-white' : 'text-gray-600 dark:text-zinc-400'}`}>

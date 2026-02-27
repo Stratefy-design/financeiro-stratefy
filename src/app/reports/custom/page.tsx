@@ -48,9 +48,9 @@ export default async function CustomReportPage(props: { searchParams: Promise<{ 
                             Relatório Oficial
                         </div>
                         <div>
-                            <h1 className="text-4xl font-black text-gray-900 dark:text-white uppercase tracking-tighter leading-[0.9] mb-3 print:text-4xl print:!text-black">
+                            <h1 className="text-4xl font-black text-gray-900 dark:text-white uppercase tracking-tighter leading-[1.1] mb-3 print:text-4xl print:!text-black">
                                 DEMONSTRATIVO <br />
-                                <span className="text-[#8058FF] print-force-brand">DE SERVIÇOS</span>
+                                <span className="text-[#8058FF] print:!text-[#8058FF]">DE SERVIÇOS</span>
                             </h1>
                             <p className="text-xs text-gray-400 dark:text-zinc-500 font-bold uppercase tracking-widest print:!text-gray-600">
                                 EMITIDO EM: {format(new Date(), "dd 'de' MMMM 'de' yyyy", { locale: ptBR })}
@@ -72,12 +72,12 @@ export default async function CustomReportPage(props: { searchParams: Promise<{ 
                         <h2 className="font-black text-xl text-gray-900 dark:text-white uppercase tracking-tight print:!text-black leading-none mb-2">
                             {profile?.companyName || profile?.name}
                         </h2>
-                        <div className="space-y-1 text-xs font-bold text-gray-500 dark:text-zinc-400 uppercase tracking-tight print:!text-gray-700">
-                            {profile?.companyAddress && <p className="max-w-[300px] leading-tight mb-2">{profile.companyAddress}</p>}
+                        <div className="space-y-1 text-[10px] font-bold text-gray-400 dark:text-zinc-500 uppercase tracking-tight print:!text-gray-700">
+                            {profile?.companyAddress && <p className="max-w-[250px] leading-tight mb-2 print:max-w-none">{profile.companyAddress}</p>}
                             <div className="flex flex-col md:items-end gap-1 print:items-end">
-                                {profile?.companyEmail && <span className="text-[10px] text-[#8058FF] print-force-brand tracking-normal normal-case">{profile.companyEmail}</span>}
-                                {profile?.companyPhone && <span className="text-[10px] tracking-normal">{profile.companyPhone}</span>}
-                                {profile?.companyWebsite && <span className="text-[10px] text-[#8058FF] print-force-brand underline decoration-dotted decoration-1 underline-offset-4 tracking-normal normal-case">{profile.companyWebsite.replace(/^https?:\/\//, '')}</span>}
+                                {profile?.companyEmail && <span className="text-[#8058FF] print:!text-[#8058FF] tracking-normal normal-case">{profile.companyEmail}</span>}
+                                {profile?.companyPhone && <span className="tracking-normal">{profile.companyPhone}</span>}
+                                {profile?.companyWebsite && <span className="text-[#8058FF] print:!text-[#8058FF] underline decoration-dotted decoration-1 underline-offset-4 tracking-normal normal-case">{profile.companyWebsite.replace(/^https?:\/\//, '')}</span>}
                             </div>
                         </div>
                     </div>
@@ -130,8 +130,8 @@ export default async function CustomReportPage(props: { searchParams: Promise<{ 
                                 );
                             })}
                         </tbody>
-                        <tfoot>
-                            <tr className="border-t-4 border-gray-900 dark:border-zinc-100 print:!border-black">
+                        <tbody className="border-t-4 border-gray-900 dark:border-zinc-100 print:!border-black">
+                            <tr className="print:!border-black">
                                 <td colSpan={5} className="py-12 text-right">
                                     <span className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 dark:text-zinc-500 mr-4 print:!text-gray-500">
                                         Valor Total do Demonstrativo
@@ -143,7 +143,7 @@ export default async function CustomReportPage(props: { searchParams: Promise<{ 
                                     </span>
                                 </td>
                             </tr>
-                        </tfoot>
+                        </tbody>
                     </table>
                 </div>
 

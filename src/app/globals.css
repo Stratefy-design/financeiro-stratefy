@@ -210,9 +210,10 @@ main:not(.clerk-glass) .cl-cardBox,
     display: table-header-group;
   }
 
-  tfoot {
+  /* Removed to prevent total values from repeating on every page */
+  /* tfoot {
     display: table-footer-group;
-  }
+  } */
 
   /* Force brand colors to appear in print */
   .print-force-brand {
