@@ -1,0 +1,234 @@
+@import "tailwindcss";
+
+@variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-background: #F9FAFB;
+  --color-foreground: #111827;
+  --color-primary: #111827;
+  --color-card: #FFFFFF;
+  --color-card-foreground: #111827;
+  --color-border: #E5E7EB;
+  --color-muted: #6B7280;
+  --color-brand: #8058FF;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 0.875rem;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    letter-spacing: -0.025em;
+    font-weight: 600;
+    color: #111827;
+  }
+}
+
+/* CLERK OVERRIDES - SCOPED GLASS EFFECT (Splash Screen Only) */
+.clerk-glass {
+
+  .cl-rootBox,
+  .cl-card,
+  .cl-cardBox,
+  .cl-scrollBox,
+  .cl-header,
+  .cl-main,
+  .cl-footer,
+  .cl-signIn-root,
+  .cl-signUp-root,
+  .cl-page {
+    background-color: transparent !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+  .cl-headerTitle {
+    color: white !important;
+  }
+
+  .cl-headerSubtitle {
+    color: #A1A1AA !important;
+    /* Zinc 400 */
+  }
+
+  .cl-socialButtonsBlockButton {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: white !important;
+  }
+
+  .cl-formFieldInput {
+    background-color: rgba(0, 0, 0, 0.2) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: white !important;
+  }
+}
+
+.cl-formButtonPrimary {
+  background-color: #8058FF !important;
+  box-shadow: 0 0 20px -5px #8058FF !important;
+}
+
+/* INTERNAL CLERK UI - SOLID BACKGROUNDS (Non-Glass) */
+header:not(.clerk-glass) .cl-userButtonPopoverCard,
+header:not(.clerk-glass) .cl-userProfile-root,
+main:not(.clerk-glass) .cl-card,
+main:not(.clerk-glass) .cl-cardBox,
+.cl-userButtonPopoverCard,
+.cl-userProfile-root {
+  background-color: white !important;
+  background: white !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: #111827 !important;
+}
+
+/* POPOVER SPECIFIC (Needs border for visibility) */
+.cl-userButtonPopoverCard {
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* DARK MODE VARIANTS */
+.dark {
+
+  header:not(.clerk-glass) .cl-userButtonPopoverCard,
+  header:not(.clerk-glass) .cl-userProfile-root,
+  main:not(.clerk-glass) .cl-card,
+  main:not(.clerk-glass) .cl-cardBox,
+  .cl-userButtonPopoverCard,
+  .cl-userProfile-root {
+    background-color: #18181b !important;
+    background: #18181b !important;
+    border: none !important;
+    box-shadow: none !important;
+    color: white !important;
+  }
+
+  .cl-userButtonPopoverCard {
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5) !important;
+  }
+}
+
+.cl-userButtonPopoverActionButton:hover {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+.card-subtle {
+  background-color: white;
+  border: 1px solid #E5E7EB;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* Custom Webkit Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #E4E4E7;
+  /* Zinc 200 - Light mode default */
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #A1A1AA;
+  /* Zinc 400 */
+}
+
+/* Dark mode scrollbar */
+@media (prefers-color-scheme: dark) {
+  ::-webkit-scrollbar-thumb {
+    background: #27272A;
+    /* Zinc 800 */
+    border: 1px solid #18181B;
+    /* Zinc 950 */
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #3F3F46;
+    /* Zinc 700 */
+  }
+}
+
+@layer utilities {
+  .bg-noise {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  }
+}
+
+/* HIGH-QUALITY PRINT STYLES */
+@media print {
+  @page {
+    margin: 1.5cm;
+    size: auto;
+  }
+
+  body {
+    background: white !important;
+    color: black !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .dark {
+    background: white !important;
+    color: black !important;
+  }
+
+  /* Reset layout for print */
+  main {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Ensure rows don't break awkwardly */
+  tr {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  thead {
+    display: table-header-group;
+  }
+
+  tfoot {
+    display: table-footer-group;
+  }
+
+  /* Force brand colors to appear in print */
+  .print-force-brand {
+    color: #8058FF !important;
+    border-color: #8058FF !important;
+    background-color: #F3F0FF !important;
+  }
+
+  /* Hide scrollbars/background noise in print */
+  .bg-noise,
+  ::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  /* Table overflow fix */
+  .overflow-x-auto {
+    overflow: visible !important;
+  }
+}

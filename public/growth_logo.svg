@@ -1,0 +1,13 @@
+<svg width="512" height="512" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="logo-grad" x1="50" y1="0" x2="50" y2="100" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8058FF"/>
+      <stop offset="1" stop-color="#4F2BD3"/>
+    </linearGradient>
+  </defs>
+  <!-- Growth Bars -->
+  <rect x="10" y="58" width="16" height="32" rx="8" fill="url(#logo-grad)" />
+  <rect x="33" y="38" width="16" height="52" rx="8" fill="url(#logo-grad)" />
+  <!-- Stylized F / Third Pillar -->
+  <path d="M56 18C56 13.5817 59.5817 10 64 10H88C92.4183 10 96 13.5817 96 18V20C96 24.4183 92.4183 28 88 28H72V42H84C88.4183 42 92 45.5817 92 50V52C92 56.4183 88.4183 60 84 60H72V90C72 94.4183 68.4183 98 64 98V98C59.5817 98 56 94.4183 56 90V18Z" fill="url(#logo-grad)" />
+</svg>

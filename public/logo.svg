@@ -1,0 +1,8 @@
+<svg width="512" height="512" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Bar 1 (Shortest, lowest opacity) -->
+  <rect x="3" y="14" width="4" height="6" rx="1.5" fill="#8058FF" fill-opacity="0.3"/>
+  <!-- Bar 2 (Medium) -->
+  <rect x="10" y="8" width="4" height="12" rx="1.5" fill="#8058FF" fill-opacity="0.6"/>
+  <!-- Bar 3 (Tallest, full opacity) -->
+  <rect x="17" y="4" width="4" height="16" rx="1.5" fill="#8058FF"/>
+</svg>

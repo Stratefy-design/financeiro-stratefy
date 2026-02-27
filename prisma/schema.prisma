@@ -1,0 +1,138 @@
+generator client {
+  provider   = "prisma-client-js"
+  engineType = "library"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Profile {
+  id                 Int               @id @default(autoincrement())
+  userId             String?           @unique
+  name               String
+  type               String
+  currency           String            @default("BRL")
+  revenueGoal        Float             @default(0)
+  companyName        String?
+  companyAddress     String?
+  companyEmail       String?
+  companyPhone       String?
+  companyWebsite     String?
+  companyAvatar      String?
+  businessDaysConfig String            @default("mon-sat")
+  createdAt          DateTime          @default(now())
+  appointments       Appointment[]
+  clients            Client[]
+  debts              Debt[]
+  expenseCategories  ExpenseCategory[]
+  goals              Goal[]
+  services           Service[]
+  transactions       Transaction[]
+}
+
+model Client {
+  id           Int           @id @default(autoincrement())
+  profileId    Int
+  name         String
+  email        String?
+  phone        String?
+  createdAt    DateTime      @default(now())
+  appointments Appointment[]
+  profile      Profile       @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  transactions Transaction[]
+}
+
+model Service {
+  id           Int           @id @default(autoincrement())
+  profileId    Int
+  name         String
+  defaultPrice Float?
+  createdAt    DateTime      @default(now())
+  profile      Profile       @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  transactions Transaction[]
+}
+
+model Transaction {
+  id               Int       @id @default(autoincrement())
+  profileId        Int
+  description      String
+  amount           Float
+  type             String
+  category         String
+  date             DateTime
+  status           String    @default("completed")
+  isRecurring      Boolean   @default(false)
+  dueDate          DateTime?
+  quantity         Int       @default(1)
+  invoiceGenerated Boolean   @default(false)
+  clientId         Int?
+  serviceId        Int?
+  createdAt        DateTime  @default(now())
+  service          Service?  @relation(fields: [serviceId], references: [id])
+  client           Client?   @relation(fields: [clientId], references: [id])
+  profile          Profile   @relation(fields: [profileId], references: [id], onDelete: Cascade)
+}
+
+model Goal {
+  id            Int       @id @default(autoincrement())
+  profileId     Int
+  title         String
+  targetAmount  Float
+  currentAmount Float     @default(0)
+  deadline      DateTime?
+  color         String?
+  createdAt     DateTime  @default(now())
+  profile       Profile   @relation(fields: [profileId], references: [id], onDelete: Cascade)
+}
+
+model ExpenseCategory {
+  id        Int      @id @default(autoincrement())
+  profileId Int
+  name      String
+  createdAt DateTime @default(now())
+  profile   Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
+}
+
+model Debt {
+  id               Int               @id @default(autoincrement())
+  profileId        Int
+  description      String
+  amount           Float
+  installmentValue Float?
+  paymentDay       Int?
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  profile          Profile           @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  paymentPlans     DebtPaymentPlan[]
+}
+
+model DebtPaymentPlan {
+  id        Int      @id @default(autoincrement())
+  debtId    Int
+  day       Int
+  month     Int
+  year      Int
+  amount    Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  debt      Debt     @relation(fields: [debtId], references: [id], onDelete: Cascade)
+
+  @@unique([debtId, day, month, year])
+}
+
+model Appointment {
+  id          Int      @id @default(autoincrement())
+  profileId   Int
+  title       String
+  description String?
+  date        DateTime
+  location    String?
+  clientId    Int?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  client      Client?  @relation(fields: [clientId], references: [id])
+  profile     Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
+}
